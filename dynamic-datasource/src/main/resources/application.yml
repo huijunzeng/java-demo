@@ -1,0 +1,70 @@
+## 用本地配置
+
+##自定义属性
+base:
+    config:
+        swagger:
+            enabled: true
+            api-base-package: com.example.dynamicdatasource
+            contact:
+                name: ZJH
+                email: 18826233829@163.com
+                url:
+            title: 动态数据源
+            description: 动态数据源+读写分离
+            version: 1.0
+
+##非自定义属性
+server:
+    port: 8080 # 启动端口
+spring:
+    application:
+        name: dynamic-datasource
+    # mysql多数据源配置
+    datasource:
+        # 主库数据源配置
+        master:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            # 注意点：自动注册的url要改成jdbc-url
+            jdbc-url: jdbc:mysql://129.211.34.120:3307/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+            username: root
+            password: 654321
+        # 从库数据源配置
+        slave:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            # 注意点：自动注册的url要改成jdbc-url
+            jdbc-url: jdbc:mysql://129.211.34.120:3308/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+            username: root
+            password: 123456
+            enabled: true # 开启/关闭
+        # 数据源hikari连接池配置
+        type: com.zaxxer.hikari.HikariDataSource
+        hikari:
+            max-idle: 5
+            minimum-idle: 10 # 池中维护的最小空闲连接数
+            idle-timeout: 60000 # 连接允许在池中闲置的最长时间
+            maximum-pool-size: 20 # 池中最大连接数，包括闲置和使用中的连接
+            auto-commit: true # 自动提交从池中返回的连接
+            pool-name: HikariCP # 连接池的用户定义名称
+            max-lifetime: 600000 # 池中连接最长生命周期
+            connection-timeout: 30000 # 等待来自池的连接的最大毫秒数
+            connection-test-query: SELECT 1 # 指定校验连接合法性执行的sql语句
+    # jackson配置
+    jackson:
+        # 以下为时间格式转换全局设置，如果只需局部设置则在时间字段上加注解@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        # 属性值为NULL的字段则不参与序列化，即null值不返回给前端
+        default-property-inclusion: non_null
+
+##mybatis-plus配置
+mybatis-plus:
+    # mapper层xml文件路径映射
+    mapper-locations: classpath:mapper/*.xml
+    # 实体扫描，多个package用逗号或者分号分隔
+    type-aliases-package: com.example.dynamicdatasource.entity
+    configuration:
+        # 开启驼峰式命名规则自动转换 对于数据库有下划线_的字段，需要配置
+        map-underscore-to-camel-case: true
+        # mybatis-plus配置控制台打印完整带参数SQL语句
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
