@@ -1,7 +1,9 @@
 package com.example.dynamicdatasource.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.dynamicdatasource.dto.UserDTO;
 import com.example.dynamicdatasource.entity.UserEntity;
+import com.example.dynamicdatasource.vo.UserVO;
 
 /**
  * @author zjh
@@ -10,7 +12,9 @@ import com.example.dynamicdatasource.entity.UserEntity;
  */
 public interface UserService extends IService<UserEntity> {
 
-    UserEntity getByName(String name);
+    boolean save(UserDTO userDTO);
+
+    UserVO getByName(String name);
 
     int count();
 }

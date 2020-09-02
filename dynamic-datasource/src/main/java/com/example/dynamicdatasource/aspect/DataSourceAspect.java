@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.lang.reflect.SourceLocation;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,7 @@ import org.springframework.util.StringUtils;
 import java.util.Objects;
 
 /**
- * 多数据源处理
- *
+ * 利用Aop特性选择数据源
  * @author zjh
  */
 
@@ -26,12 +26,32 @@ import java.util.Objects;
 @Slf4j
 public class DataSourceAspect {
 
-    @Pointcut("@annotation(com.example.dynamicdatasource.annotation.DataSource)")
-    public void dsPointCut() {
-
+    /**写操作切点（匹配对数据的增删改的注解以及所有方法）*/
+    @Pointcut("@annotation(com.example.dynamicdatasource.annotation.DataSource)" +
+              "|| execution(* com.example.dynamicdatasource.service..*.save*(..))" +
+              "|| execution(* com.example.dynamicdatasource.service..*.insert*(..))" +
+              "|| execution(* com.example.dynamicdatasource.service..*.add*(..))" +
+              "|| execution(* com.example.dynamicdatasource.service..*.update*(..))" +
+              "|| execution(* com.example.dynamicdatasource.service..*.delete*(..))" +
+              "|| execution(* com.example.dynamicdatasource.service..*.remove*(..))"
+    )
+    public void writePointCut() {
     }
 
-    @Before("dsPointCut()")
+    /**读操作切点（匹配对数据的查询的注解以及所有方法）*/
+    @Pointcut("@annotation(com.example.dynamicdatasource.annotation.DataSource)" +
+            "|| execution(* com.example.dynamicdatasource.service..*.select*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.query*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.find*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.get*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.list*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.page*(..))"
+    )
+    public void readPointCut() {
+    }
+
+    /**判断选择数据源*/
+    @Before("writePointCut() || readPointCut()")
     public void before(JoinPoint point) {
         DataSource dataSource = getDataSource(point);
 
@@ -42,17 +62,17 @@ public class DataSourceAspect {
         DynamicDataSourceContextHolder.setDatasourceType(value);
     }
 
-    @After("dsPointCut()")
+    /**执行完必须要清除线程变量*/
+    @After("writePointCut() || readPointCut()")
     public void after(JoinPoint joinPoint){
         DynamicDataSourceContextHolder.clear();
     }
 
 
-    /**
-     * 获取需要切换的数据源
-     */
+    /**获取需要切换的数据源*/
     public DataSource getDataSource(JoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
+        SourceLocation sourceLocation = point.getSourceLocation();
         DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
         if (Objects.nonNull(dataSource)) {
             return dataSource;

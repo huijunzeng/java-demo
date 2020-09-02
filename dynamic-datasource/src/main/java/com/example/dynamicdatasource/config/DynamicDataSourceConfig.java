@@ -29,6 +29,7 @@ import java.util.Map;
 @Slf4j
 public class DynamicDataSourceConfig {
 
+    /**主库配置*/
     @Bean("masterDataSource")
     @ConfigurationProperties("spring.datasource.master")
     public DataSource masterDataSource()
@@ -36,6 +37,7 @@ public class DynamicDataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
+    /**从库配置*/
     @Bean("slaveDataSource")
     @ConfigurationProperties("spring.datasource.slave")
     @ConditionalOnProperty(prefix = "spring.datasource.slave", name = "enabled", havingValue = "true")
@@ -49,7 +51,7 @@ public class DynamicDataSourceConfig {
      */
     @Primary
     @Bean(name = "dynamicDataSource")
-    public DynamicDataSource dataSource() throws JsonProcessingException {
+    public DynamicDataSource dataSource() {
         // 数据源集合
         Map<Object, Object> targetDataSources = new HashMap<>();
         // map的key需要一一对应
@@ -63,7 +65,8 @@ public class DynamicDataSourceConfig {
         return dynamicDataSource;
     }
 
-    /**以下可不配*/
+    /**以下可不配  DynamicDataSource需要一致*/
+    /**配置MybatisSqlSessionFactory*/
     @Bean
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
         //mybatis plus报ibatis.binding.BindingException: Invalid bound statement (not found)
@@ -76,6 +79,7 @@ public class DynamicDataSourceConfig {
         return factoryBean.getObject();
     }
 
+    /**配置事务管理器*/
     @Bean
     public PlatformTransactionManager transactionManager(DynamicDataSource dynamicDataSource){
         return new DataSourceTransactionManager(dynamicDataSource);

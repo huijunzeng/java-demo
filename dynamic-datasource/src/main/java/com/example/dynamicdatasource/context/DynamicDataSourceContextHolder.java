@@ -27,6 +27,7 @@ public class DynamicDataSourceContextHolder {
 
     /**清空数据源变量，避免可能会造成栈溢出*/
     public static void clear() {
+        log.info("=======clear dataSource======");
         threadLocal.remove();
     }
 }

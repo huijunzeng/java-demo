@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author zjh
  * @Description
@@ -14,7 +16,7 @@ import lombok.Data;
 @TableName("user")
 @ApiModel(description = "用户表")
 @Data
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     /**
      * 用户名
