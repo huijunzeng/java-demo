@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.aspectj.lang.reflect.SourceLocation;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -45,34 +44,34 @@ public class DataSourceAspect {
             "|| execution(* com.example.dynamicdatasource.service..*.find*(..))" +
             "|| execution(* com.example.dynamicdatasource.service..*.get*(..))" +
             "|| execution(* com.example.dynamicdatasource.service..*.list*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.page*(..))"
+            "|| execution(* com.example.dynamicdatasource.service..*.page*(..))" +
+            "|| execution(* com.example.dynamicdatasource.service..*.count*(..))"
     )
     public void readPointCut() {
     }
 
     /**判断选择数据源*/
-    @Before("writePointCut() || readPointCut()")
+    @Before("readPointCut()")
     public void before(JoinPoint point) {
         DataSource dataSource = getDataSource(point);
 
-        if (StringUtils.isEmpty(dataSource)) {
-            DynamicDataSourceContextHolder.setDatasourceType(DataSourceType.MASTER.name());
+        if (null == dataSource) {
+            DynamicDataSourceContextHolder.setDatasourceType(DataSourceType.SLAVE.name());
+        } else {
+            String value = dataSource.value().name();
+            DynamicDataSourceContextHolder.setDatasourceType(value);
         }
-        String value = dataSource.value().name();
-        DynamicDataSourceContextHolder.setDatasourceType(value);
     }
 
     /**执行完必须要清除线程变量*/
-    @After("writePointCut() || readPointCut()")
+    @After("readPointCut()")
     public void after(JoinPoint joinPoint){
         DynamicDataSourceContextHolder.clear();
     }
 
-
     /**获取需要切换的数据源*/
     public DataSource getDataSource(JoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
-        SourceLocation sourceLocation = point.getSourceLocation();
         DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
         if (Objects.nonNull(dataSource)) {
             return dataSource;

@@ -15,11 +15,15 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     /**
      * 父类的主要属性：
      * targetDataSources 目标数据源集合
+     * resolvedDataSources 等价于targetDataSources
      * defaultTargetDataSource 默认数据源
      * DataSourceLookup 数据库路由策略
      */
 
-    /**数据库路由策略，从线程上下文获取当前线程的数据源*/
+    /**
+     * 数据库路由策略，从线程上下文获取当前线程的数据源在数据源集合targetDataSources中的key值
+     * 然后在数据源集合resolvedDataSources中找到该key对应的数据源加载
+     */
     @Override
     protected Object determineCurrentLookupKey() {
         log.info("++++++++=========current datasource : " + DynamicDataSourceContextHolder.getDatasourceType());

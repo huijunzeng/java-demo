@@ -2,8 +2,6 @@ package com.example.dynamicdatasource.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.dynamicdatasource.annotation.DataSource;
-import com.example.dynamicdatasource.annotation.DataSourceType;
 import com.example.dynamicdatasource.dto.UserDTO;
 import com.example.dynamicdatasource.entity.UserEntity;
 import com.example.dynamicdatasource.mapper.UserMapper;
@@ -35,7 +33,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    //@DataSource(DataSourceType.SLAVE)
     public UserVO getByName(String name) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(UserEntity::getName, name);
