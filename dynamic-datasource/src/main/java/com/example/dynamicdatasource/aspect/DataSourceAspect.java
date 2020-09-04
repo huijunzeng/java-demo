@@ -10,7 +10,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 
@@ -19,6 +18,7 @@ import java.util.Objects;
  * @author zjh
  */
 
+// 确保最先执行
 @Order(1)
 @Component
 @Aspect
@@ -53,6 +53,7 @@ public class DataSourceAspect {
     /**判断选择数据源*/
     @Before("readPointCut()")
     public void before(JoinPoint point) {
+        // 读操作选择从库数据源
         DataSource dataSource = getDataSource(point);
 
         if (null == dataSource) {

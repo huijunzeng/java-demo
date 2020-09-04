@@ -2,7 +2,6 @@ package com.example.dynamicdatasource.config;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.example.dynamicdatasource.annotation.DataSourceType;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -40,7 +39,6 @@ public class DynamicDataSourceConfig {
     /**从库配置*/
     @Bean("slaveDataSource")
     @ConfigurationProperties("spring.datasource.slave")
-    @ConditionalOnProperty(prefix = "spring.datasource.slave", name = "enabled", havingValue = "true")
     public DataSource slaveDataSource()
     {
         return DataSourceBuilder.create().build();
