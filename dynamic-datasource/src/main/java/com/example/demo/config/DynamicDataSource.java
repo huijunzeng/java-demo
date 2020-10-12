@@ -1,6 +1,6 @@
-package com.example.dynamicdatasource.config;
+package com.example.demo.config;
 
-import com.example.dynamicdatasource.context.DynamicDataSourceContextHolder;
+import com.example.demo.context.DynamicDataSourceContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

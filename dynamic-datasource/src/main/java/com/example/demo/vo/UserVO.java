@@ -1,4 +1,4 @@
-package com.example.dynamicdatasource.vo;
+package com.example.demo.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

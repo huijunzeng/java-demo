@@ -5,7 +5,7 @@ base:
     config:
         swagger:
             enabled: true
-            api-base-package: com.example.dynamicdatasource
+            api-base-package: com.example.demo
             contact:
                 name: ZJH
                 email: 18826233829@163.com
@@ -61,7 +61,7 @@ mybatis-plus:
     # mapper层xml文件路径映射
     mapper-locations: classpath:mapper/*.xml
     # 实体扫描，多个package用逗号或者分号分隔
-    type-aliases-package: com.example.dynamicdatasource.entity
+    type-aliases-package: com.example.demo.entity
     configuration:
         # 开启驼峰式命名规则自动转换 对于数据库有下划线_的字段，需要配置
         map-underscore-to-camel-case: true

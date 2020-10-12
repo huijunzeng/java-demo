@@ -1,4 +1,4 @@
-package com.example.dynamicdatasource;
+package com.example.demo;
 
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class}) // 排除自动读取配置数据库
-@MapperScan({"com.example.dynamicdatasource.mapper"}) // 扫描mapper文件
+@MapperScan({"com.example.demo.mapper"}) // 扫描mapper文件
 public class DynamicDatasourceApplication {
 
     public static void main(String[] args) {

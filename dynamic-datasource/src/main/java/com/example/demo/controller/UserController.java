@@ -1,11 +1,8 @@
-package com.example.dynamicdatasource.controller;
+package com.example.demo.controller;
 
-import com.example.dynamicdatasource.annotation.DataSource;
-import com.example.dynamicdatasource.annotation.DataSourceType;
-import com.example.dynamicdatasource.dto.UserDTO;
-import com.example.dynamicdatasource.entity.UserEntity;
-import com.example.dynamicdatasource.service.UserService;
-import com.example.dynamicdatasource.vo.UserVO;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.service.UserService;
+import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

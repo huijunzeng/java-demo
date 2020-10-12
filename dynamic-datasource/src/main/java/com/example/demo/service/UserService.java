@@ -1,9 +1,9 @@
-package com.example.dynamicdatasource.service;
+package com.example.demo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.dynamicdatasource.dto.UserDTO;
-import com.example.dynamicdatasource.entity.UserEntity;
-import com.example.dynamicdatasource.vo.UserVO;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.vo.UserVO;
 
 /**
  * @author zjh

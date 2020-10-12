@@ -1,4 +1,4 @@
-package com.example.dynamicdatasource.entity;
+package com.example.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

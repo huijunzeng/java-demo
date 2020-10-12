@@ -1,7 +1,7 @@
-package com.example.dynamicdatasource.mapper;
+package com.example.demo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.dynamicdatasource.entity.UserEntity;
+import com.example.demo.entity.UserEntity;
 
 /**
  * <p>

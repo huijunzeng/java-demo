@@ -1,4 +1,4 @@
-package com.example.dynamicdatasource.annotation;
+package com.example.demo.annotation;
 
 /**
  * @author zjh

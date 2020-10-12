@@ -1,8 +1,8 @@
-package com.example.dynamicdatasource.aspect;
+package com.example.demo.aspect;
 
-import com.example.dynamicdatasource.annotation.DataSource;
-import com.example.dynamicdatasource.annotation.DataSourceType;
-import com.example.dynamicdatasource.context.DynamicDataSourceContextHolder;
+import com.example.demo.annotation.DataSource;
+import com.example.demo.annotation.DataSourceType;
+import com.example.demo.context.DynamicDataSourceContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -26,26 +26,26 @@ import java.util.Objects;
 public class DataSourceAspect {
 
     /**写操作切点（匹配对数据的增删改的注解以及所有方法）*/
-    @Pointcut("@annotation(com.example.dynamicdatasource.annotation.DataSource)" +
-              "|| execution(* com.example.dynamicdatasource.service..*.save*(..))" +
-              "|| execution(* com.example.dynamicdatasource.service..*.insert*(..))" +
-              "|| execution(* com.example.dynamicdatasource.service..*.add*(..))" +
-              "|| execution(* com.example.dynamicdatasource.service..*.update*(..))" +
-              "|| execution(* com.example.dynamicdatasource.service..*.delete*(..))" +
-              "|| execution(* com.example.dynamicdatasource.service..*.remove*(..))"
+    @Pointcut("@annotation(com.example.demo.annotation.DataSource)" +
+              "|| execution(* com.example.demo.service..*.save*(..))" +
+              "|| execution(* com.example.demo.service..*.insert*(..))" +
+              "|| execution(* com.example.demo.service..*.add*(..))" +
+              "|| execution(* com.example.demo.service..*.update*(..))" +
+              "|| execution(* com.example.demo.service..*.delete*(..))" +
+              "|| execution(* com.example.demo.service..*.remove*(..))"
     )
     public void writePointCut() {
     }
 
     /**读操作切点（匹配对数据的查询的注解以及所有方法）*/
-    @Pointcut("@annotation(com.example.dynamicdatasource.annotation.DataSource)" +
-            "|| execution(* com.example.dynamicdatasource.service..*.select*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.query*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.find*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.get*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.list*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.page*(..))" +
-            "|| execution(* com.example.dynamicdatasource.service..*.count*(..))"
+    @Pointcut("@annotation(com.example.demo.annotation.DataSource)" +
+            "|| execution(* com.example.demo.service..*.select*(..))" +
+            "|| execution(* com.example.demo.service..*.query*(..))" +
+            "|| execution(* com.example.demo.service..*.find*(..))" +
+            "|| execution(* com.example.demo.service..*.get*(..))" +
+            "|| execution(* com.example.demo.service..*.list*(..))" +
+            "|| execution(* com.example.demo.service..*.page*(..))" +
+            "|| execution(* com.example.demo.service..*.count*(..))"
     )
     public void readPointCut() {
     }

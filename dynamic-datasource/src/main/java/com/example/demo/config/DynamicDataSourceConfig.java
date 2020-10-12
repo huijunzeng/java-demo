@@ -1,7 +1,7 @@
-package com.example.dynamicdatasource.config;
+package com.example.demo.config;
 
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.example.dynamicdatasource.annotation.DataSourceType;
+import com.example.demo.annotation.DataSourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;

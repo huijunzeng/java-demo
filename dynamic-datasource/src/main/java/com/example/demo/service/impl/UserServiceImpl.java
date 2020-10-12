@@ -1,12 +1,12 @@
-package com.example.dynamicdatasource.service.impl;
+package com.example.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.dynamicdatasource.dto.UserDTO;
-import com.example.dynamicdatasource.entity.UserEntity;
-import com.example.dynamicdatasource.mapper.UserMapper;
-import com.example.dynamicdatasource.service.UserService;
-import com.example.dynamicdatasource.vo.UserVO;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.UserService;
+import com.example.demo.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

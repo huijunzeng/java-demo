@@ -1,4 +1,4 @@
-package com.example.dynamicdatasource.dto;
+package com.example.demo.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
