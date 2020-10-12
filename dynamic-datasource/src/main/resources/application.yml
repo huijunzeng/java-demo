@@ -26,14 +26,14 @@ spring:
         master:
             driver-class-name: com.mysql.cj.jdbc.Driver
             # 注意点：自动注册的url要改成jdbc-url
-            jdbc-url: jdbc:mysql://localhost:3307/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+            jdbc-url: jdbc:mysql://129.211.34.120:3307/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
             username: root
             password: 654321
         # 从库数据源配置
         slave:
             driver-class-name: com.mysql.cj.jdbc.Driver
             # 注意点：自动注册的url要改成jdbc-url
-            jdbc-url: jdbc:mysql://localhost:3308/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+            jdbc-url: jdbc:mysql://129.211.34.120:3308/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
             username: root
             password: 123456
         # 数据源hikari连接池配置

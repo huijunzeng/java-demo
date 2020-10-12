@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.example.dynamicdatasource.annotation.DataSourceType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -67,8 +66,8 @@ public class DynamicDataSourceConfig {
     /**配置MybatisSqlSessionFactory*/
     @Bean
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
-        //mybatis plus报ibatis.binding.BindingException: Invalid bound statement (not found)
-        //解决： 不要使用原生的SqlSessionFactoryBean，替换成mybatis的MybatisSqlSessionFactory
+        // mybatis plus报ibatis.binding.BindingException: Invalid bound statement (not found)
+        // 解决： 不要使用原生的SqlSessionFactoryBean，替换成mybatis的MybatisSqlSessionFactory
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dynamicDataSource);
         // 设置mapper.xml的位置路径
