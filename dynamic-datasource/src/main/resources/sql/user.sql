@@ -1,15 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server Type    : MySQL8.0
+ Source Server         : slave
+ Source Server Type    : MySQL
  Source Server Version : 80018
+ Source Host           : 129.211.34.120:3308
  Source Schema         : test
 
  Target Server Type    : MySQL
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 04/09/2020 14:12:23
+ Date: 12/10/2020 16:18:06
 */
 
 SET NAMES utf8mb4;
@@ -20,7 +22,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
