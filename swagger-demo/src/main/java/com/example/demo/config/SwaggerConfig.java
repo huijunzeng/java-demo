@@ -32,7 +32,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 
 @Slf4j
 @Configuration
-@EnableOpenApi
+@EnableOpenApi // 开启swagger
 @EnableConfigurationProperties(value = {SwaggerProperties.class})
 //@Profile({"dev"}) //只在dev环境生效 与@ConditionalOnProperty效果类似  需要在配置文件配置spring.profiles=dev
 @ConditionalOnProperty(name = "base.config.swagger.enabled", havingValue = "true") //在@Profile({"dev"})生效的前提下，如果application.yml配置文件中的base.config.swagger.enable为true才生效，不然不生效
@@ -42,17 +42,12 @@ public class SwaggerConfig {
     @Autowired
     private TypeResolver typeResolver;
 
-    // 需要使用构造注入
-    private SwaggerProperties swaggerProperties;
     @Autowired
-    public SwaggerConfig(SwaggerProperties swaggerProperties) {
-        this.swaggerProperties = swaggerProperties;
-    }
+    private SwaggerProperties swaggerProperties;
 
     @Bean
     public Docket api() {
         log.info("swaggerProperties======================: {}", swaggerProperties != null ? swaggerProperties.toString() : null);
-        log.info("==============: " + swaggerProperties.getApiBasePackage());
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .select()

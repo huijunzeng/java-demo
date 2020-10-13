@@ -34,6 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean update(UserUpdateDTO userUpdateDTO) {
         UserEntity userEntity = super.getById(userUpdateDTO.getId());
         BeanUtils.copyProperties(userUpdateDTO, userEntity);

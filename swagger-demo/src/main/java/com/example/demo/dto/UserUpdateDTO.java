@@ -16,9 +16,9 @@ import java.io.Serializable;
 @Data
 public class UserUpdateDTO implements Serializable {
 
-    @ApiModelProperty("id")
+    @ApiModelProperty(value = "id", example = "123456789")
     private Long id;
 
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名", example = "test")
     private String name;
 }
