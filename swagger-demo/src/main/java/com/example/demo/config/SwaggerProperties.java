@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "base.config.swagger")
 public class SwaggerProperties {
 
-    @ApiModelProperty("api接口路径，即controller层路径")
-    private String apiBasePackage;
-
     @ApiModelProperty("标题")
     private String title;
 
@@ -27,9 +24,6 @@ public class SwaggerProperties {
 
     @ApiModelProperty("版本号")
     private String version;
-
-    @ApiModelProperty("主机ip")
-    private String host = "localhost";
 
     /**属性多层嵌套处理*/
     @ApiModelProperty("创建人信息  可用于定位该模块的负责人")

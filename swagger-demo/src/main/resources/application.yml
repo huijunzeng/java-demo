@@ -6,7 +6,6 @@ base:
         # swagger属性
         swagger:
             enabled: true
-            api-base-package: com.example.demo
             title: swagger整合案例
             description: swagger整合案例
             version: 1.0
