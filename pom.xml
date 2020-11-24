@@ -11,6 +11,8 @@
     <modules>
         <module>dynamic-datasource</module>
         <module>swagger-demo</module>
+        <module>utils</module>
+        <module>learning</module>
     </modules>
 
     <parent>
