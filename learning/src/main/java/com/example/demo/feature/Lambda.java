@@ -3,7 +3,9 @@ package com.example.demo.feature;
 import com.example.demo.tools.JSONUtil;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 /**
  * lambda操作
@@ -26,7 +28,12 @@ public class Lambda {
         // foreach遍历
         phoneList.forEach(e -> System.out.println(e));
 
+        // count统计数量
+        long phoneCount = phoneList.stream().count();
+        System.out.println("phoneCount=======" + phoneCount);
+
         // collect转化为新的对象
+        // Collectors 是 Java 8 加入的操作类，位于 java.util.stream 包下。它会根据不同的策略将元素收集归纳起来，比如最简单常用的是将元素装入Map、Set、List 等可变容器中
         List<String> collectList = phoneList.stream().collect(Collectors.toList());
         System.out.println("collectList=======" + collectList.toString());
 
@@ -62,6 +69,13 @@ public class Lambda {
         System.out.println("distinctList=======" + distinctList.toString());
         System.out.println("distinctSet=======" + distinctSet.toString());
 
+        // max min取最大值/最小值 若存在多条数据，则拿索引最小的那条
+        // 去价格最大/最小的那条数据
+        Book maxBook = bookList.stream().max(Comparator.comparing(Book::getPrice)).get();
+        Book minBook = bookList.stream().min(Comparator.comparing(Book::getPrice)).get();
+        System.out.println("maxBook=======" + JSONUtil.objectToJson(maxBook));
+        System.out.println("minBook=======" + JSONUtil.objectToJson(minBook));
+
         // map对元素操作
         // 截取元素的第一个字母
         List<String> maptList1 = phoneList.stream().map(e -> e.substring(0, 1)).collect(Collectors.toList());
@@ -72,19 +86,29 @@ public class Lambda {
         System.out.println("maptList2=======" + maptList2.toString());
         System.out.println("maptList3=======" + maptList3.toString());
 
-        // max min取最大值/最小值 若存在多条数据，则拿索引最小的那条
-        // 去价格最大/最小的那条数据
-        Book maxBook = bookList.stream().max(Comparator.comparing(Book::getPrice)).get();
-        Book minBook = bookList.stream().min(Comparator.comparing(Book::getPrice)).get();
-        System.out.println("maxBook=======" + JSONUtil.objectToJson(maxBook));
-        System.out.println("minBook=======" + JSONUtil.objectToJson(minBook));
+        // mapping提取内容并转换为新的对象 Collectors
+        // 提取Book对象的name属性,等同于上面的map对元素操作的方式
+        List<String> mappingList1 = bookList.stream().collect(Collectors.mapping(Book::getName, Collectors.toList()));
+        System.out.println("mappingList1=======" + mappingList1.toString());
 
-        // groupingBy分组
+        // collectingAndThen将数据归纳操作后再进行后续相应处理 Collectors
+        // 提取书名name，并以逗号拼接成一个字符串；最后将该字符串反转
+        Function<String,String> reverseStr = e -> new StringBuilder(e).reverse().toString();
+        String reverseBookName = bookList.stream().collect(Collectors.collectingAndThen(Collectors.mapping(Book::getName, Collectors.joining(";")), reverseStr));
+        // 提取书名name；最后生成一个新的list
+        List<String> collectingAndThenList = bookList.stream().collect(Collectors.collectingAndThen(Collectors.mapping(Book::getName, Collectors.toList()), Collections::unmodifiableList));
+        System.out.println("reverseBookName=======" + reverseBookName);
+        System.out.println("collectingAndThenList=======" + collectingAndThenList.toString());
+
+        // groupingBy分组 Collectors
         // 对book集合根据type分组
-        Map<String, List<Book>> groupingByCollect = bookList.stream().collect(Collectors.groupingBy(Book::getType));
-        System.out.println("groupingByCollect=======" + JSONUtil.objectToJson(groupingByCollect));
+        Map<String, List<Book>> groupingByCollect1 = bookList.stream().collect(Collectors.groupingBy(Book::getType));
+        // 对book集合根据type分组并提取name字段
+        Map<String, List<String>> groupingByCollect2 = bookList.stream().collect(Collectors.groupingBy(Book::getType, Collectors.mapping(Book::getName, Collectors.toList())));
+        System.out.println("groupingByCollect1=======" + JSONUtil.objectToJson(groupingByCollect1));
+        System.out.println("groupingByCollect2=======" + JSONUtil.objectToJson(groupingByCollect2));
 
-        // toMap转换为Map
+        // toMap转换为Map Collectors
         // (key1, key2) -> key1 假如存在重复的对象，那么取第一个  比如同时存在type为历史的两个book对象，那么只会取第一个，也即明朝那些事儿
         Map<String, Book> toMapCollect1 = bookList.stream().collect(Collectors.toMap(Book::getType, book -> book, (key1, key2) -> key1));
         Map<String, Book> toMapCollect2 = bookList.stream().collect(Collectors.toMap(Book::getName, book -> book, (key1, key2) -> key1));
