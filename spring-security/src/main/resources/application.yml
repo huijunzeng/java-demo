@@ -1,0 +1,42 @@
+## 用本地配置
+
+##自定义属性
+base:
+    config:
+        # swagger属性
+        swagger:
+            enabled: true
+            title: swagger整合案例
+            description: swagger整合案例
+            version: 1.0
+            contact:
+                name: ZJH
+                email: 18826233829@163.com
+                url:
+
+##非自定义属性
+server:
+    port: 8082 # 启动端口
+spring:
+    application:
+        name: spring-security
+    redis:
+        # Redis
+        host: 192.168.10.123
+        #端口号
+        port: 6379
+        datebase: 1
+        password: benson
+        #超时时间
+        timeout: 10000
+
+##jwt配置
+jwt:
+    #密钥
+    secretKey: ${JWT_SECRETKEY:cof123456}
+    #过期时间毫秒
+    expireTime: ${JWT_EXPIRETIME:864000000}
+
+##鉴权忽略路径
+ignore:
+    urls: ${IGNORE_URLS:/api/v1/user/login,/api/v1/user/userInfo,/api/v1/dashboard/,/swagger-ui.html,/swagger/,/webjars/,/swagger-resources,/static/,/doc.html,/v2/api-docs,/favor.ioc}

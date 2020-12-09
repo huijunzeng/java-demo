@@ -11,15 +11,16 @@
     <modules>
         <module>dynamic-datasource</module>
         <module>swagger-demo</module>
-        <module>utils</module>
+        <module>common</module>
         <module>learning</module>
         <module>server-minitor</module>
+        <module>spring-security</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
+        <version>2.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
