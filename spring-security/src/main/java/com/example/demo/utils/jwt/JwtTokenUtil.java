@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author zjh
- * @Description
+ * @Description  token 工具类
  * @date 2020/12/07 13:38
  */
 
@@ -49,6 +49,9 @@ public class JwtTokenUtil {
 
     /**
      * 签发token
+     * token： eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqd3QiLCJuYmYiOjE2MDc5MjQ0NDAsInJvbGVzIjpbIui2hee6p-euoeeQhuWRmCJdLCJpc3MiOiJjb2YiLCJleHAiOjE2MDg3ODg0NDAsImlhdCI6MTYwNzkyNDQ0MCwidXNlcm5hbWUiOiJ0ZXN0MTIifQ.2iM-i6-4SJDKu-V0gyL_nribFSQxksZoQb8TlpAHwtg
+     * 一个token有完整的三部分构成，使用.隔开
+     * 第一部分为Header头部信息，第二部分为Payload负载信息，这两部分均由MD5加密而成；第三部分为签名信息（即第一部分加上第二部分，再根据提供的secret密钥签名而成）
      */
     public static String createToken(UserDetails userDetails) {
         LocalDateTime now = LocalDateTime.now();
@@ -57,6 +60,7 @@ public class JwtTokenUtil {
         Date expireTimeDate = Date.from(expireTime.atZone(ZoneId.systemDefault()).toInstant());
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
         Map<String, Object> headerClaims = new HashMap<String, Object>();
+        // JWT Header信息 应该存放什么，可参考官网文档
         headerClaims.put("alg", "HS256");
         headerClaims.put("typ", "JWT");
         // 签名
@@ -67,7 +71,7 @@ public class JwtTokenUtil {
                 .withExpiresAt(expireTimeDate)
                 .withNotBefore(nowDate)
                 .withSubject("jwt")
-                // 自定义的负载信息--用户名name 用户角色--roles
+                // 自定义的Payload负载信息，比如签发时间、过期时间、用户名name、用户角色等
                 .withClaim(JwtConstants.CLAIM_USERNAME, userDetails.getUsername())
                 .withClaim(JwtConstants.CLAIM_ROLES, userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
@@ -78,6 +82,7 @@ public class JwtTokenUtil {
 
     /**
      * 解签token
+     * 注意：解密失败会抛出相关异常，比如TokenExpiredException token过期、JWTDecodeException token解析异常、SignatureVerificationException token令牌签名异常等，我们只需要在全局异常处理类中去捕获异常即可
      */
     public static DecodedJWT verifyToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
@@ -89,7 +94,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     *清除token （客户端需要清除token）
+     * 清除token （因为jwt是无状态的，不能去改变token的过期时间，所以客户端也需要清除token）
      */
     public static void removeToken(String token) {
         DecodedJWT decodedJWT = verifyToken(token);

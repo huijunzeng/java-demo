@@ -25,7 +25,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 全局异常处理类  按顺序优先处理
+ * @Author: ZJH
+ * @Description 全局异常处理类  按顺序优先处理
+ * @Date: 2020/12/8 09:32
  */
 @Slf4j
 @RestControllerAdvice

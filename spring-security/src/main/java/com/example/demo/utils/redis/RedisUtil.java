@@ -5,7 +5,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
 
-    @Resource
+    @Autowired
     private RedisTemplate redisTemplate;
 	
 	/**
@@ -75,7 +74,7 @@ public class RedisUtil {
                 if (key.length == 1) {
                     redisTemplate.delete(key[0]);
                 } else {
-//                    传入一个 Collection<String> 集合
+                    // 传入一个 Collection<String> 集合
                     redisTemplate.delete(CollectionUtils.arrayToList(key));
                 }
             }
@@ -86,7 +85,7 @@ public class RedisUtil {
         }
     }
 
-//    ============================== String ==============================
+    //    ============================== String ==============================
 
     /**
      * 普通缓存获取
@@ -164,8 +163,8 @@ public class RedisUtil {
 
     /**
      * HashGet
-     * @param key 键（no null）
-     * @param item 项（no null）
+     * @param key 键（not null）
+     * @param item 项（not null）
      * @return 值
      */
     public Object hget(String key, String item) {
@@ -201,7 +200,7 @@ public class RedisUtil {
      * HashSet 并设置时间
      * @param key 键
      * @param map 值
-     * @param time 时间
+     * @param time 时间（秒）
      * @return true / false
      */
     public boolean hmset(String key, Map<Object, Object> map, long time) {
@@ -239,7 +238,7 @@ public class RedisUtil {
      * @param key 键
      * @param item 项
      * @param value 值
-     * @param time 时间（如果原来的 Hash表 设置了时间，这里会覆盖）
+     * @param time 时间（秒，如果原来的 Hash表 设置了时间，这里会覆盖）
      * @return true / false
      */
     public boolean hset(String key, String item, Object value, long time) {
@@ -257,8 +256,8 @@ public class RedisUtil {
 
     /**
      * 删除 Hash表 中的值
-     * @param key 键
-     * @param item 项（可以多个，no null）
+     * @param key 键（not null）
+     * @param item 项（可以多个，not null）
      */
     public void hdel(String key, Object... item) {
         redisTemplate.opsForHash().delete(key, item);
@@ -266,8 +265,8 @@ public class RedisUtil {
 
     /**
      * 判断 Hash表 中是否有该键的值
-     * @param key 键（no null）
-     * @param item 值（no null）
+     * @param key 键（not null）
+     * @param item 值（not null）
      * @return true / false
      */
     public boolean hHasKey(String key, String item) {
@@ -296,7 +295,7 @@ public class RedisUtil {
         return redisTemplate.opsForHash().increment(key, item, -by);
     }
 
-//    ============================== Set ==============================
+    //    ============================== Set ==============================
 
     /**
      * 根据 key 获取 set 中的所有值
@@ -391,7 +390,7 @@ public class RedisUtil {
         }
     }
 
-//    ============================== List ==============================
+    //    ============================== List ==============================
 
     /**
      * 获取 list缓存的内容
@@ -576,6 +575,7 @@ public class RedisUtil {
      * @param key
      * @param start
      * @param end
+     * @return true / false
      */
     public void trim(String key, Integer start, Integer end) {
         try {

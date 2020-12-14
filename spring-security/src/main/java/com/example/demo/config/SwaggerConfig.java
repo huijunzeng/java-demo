@@ -38,7 +38,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 //@Profile({"dev"}) //只在dev环境生效 与@ConditionalOnProperty效果类似  需要在配置文件配置spring.profiles=dev
 @ConditionalOnProperty(name = "base.config.swagger.enabled", havingValue = "true") //在@Profile({"dev"})生效的前提下，如果application.yml配置文件中的base.config.swagger.enable为true才生效，不然不生效
 public class SwaggerConfig {
-    // swagger接口界面访问路径 ：http://localhost:8081/swagger-ui/index.html  IP为机器的IP，端口号为工程的端口
+    // swagger接口界面访问路径 ：http://localhost:8082/swagger-ui/index.html  IP为机器的IP，端口号为工程的端口
 
     @Autowired
     private TypeResolver typeResolver;

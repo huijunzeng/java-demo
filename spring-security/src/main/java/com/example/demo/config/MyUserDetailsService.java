@@ -37,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
         // todo 根据用户名去数据库查找用户（用户名必须唯一）
         //UserEntity userEntity = iUserService.loadUserByUsername(username);
         UserEntity userEntity = new UserEntity();
-        userEntity.setUsername("test");
+        userEntity.setUsername("test12");
         userEntity.setPassword("123456");
         // UsernameNotFoundException为Spring Security框架定义的异常，当找不到这个username的用户时抛出
         if (userEntity == null) {
@@ -53,6 +53,7 @@ public class MyUserDetailsService implements UserDetailsService {
      * @return
      */
     protected Set<GrantedAuthority> obtainGrantedAuthorities(UserEntity userEntity) {
+        // todo 根据用户名去数据库查找用户对应的角色/资源
         List<String> roles = Arrays.asList("超级管理员");
         log.info("user:{},roles:{}", userEntity.getUsername(), roles);
         if (null == roles || roles.isEmpty()) {

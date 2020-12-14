@@ -6,8 +6,8 @@ base:
         # swagger属性
         swagger:
             enabled: true
-            title: swagger整合案例
-            description: swagger整合案例
+            title: Spring Security + JWT整合案例
+            description: Spring Security + JWT案例
             version: 1.0
             contact:
                 name: ZJH
@@ -39,4 +39,4 @@ jwt:
 
 ##鉴权忽略路径
 ignore:
-    urls: ${IGNORE_URLS:/api/v1/user/login,/api/v1/user/userInfo,/api/v1/dashboard/,/swagger-ui.html,/swagger/,/webjars/,/swagger-resources,/static/,/doc.html,/v2/api-docs,/favor.ioc}
+    urls: ${IGNORE_URLS:/api/v1/user/login,/api/v1/user/userInfo,/swagger-ui/,/swagger/,/webjars/,/swagger-resources,/static/,/doc.html,/v3/api-docs,/favor.ioc}

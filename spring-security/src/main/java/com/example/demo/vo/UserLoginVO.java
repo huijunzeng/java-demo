@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author zjh
  * @Description
@@ -12,7 +14,7 @@ import lombok.Data;
 
 @ApiModel(value = "用户登录", description = "用户登录")
 @Data
-public class UserLoginVO {
+public class UserLoginVO implements Serializable {
 
     @ApiModelProperty("token")
     private String token;

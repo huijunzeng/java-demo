@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -42,10 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    /**PasswordEncoder是对密码的加密处理，如果user中密码没有加密，则可以不加此NoOpPasswordEncoder方法。注意加密请使用security自带的加密方式。*/
+    /**
+     * PasswordEncoder是对密码的加密处理，如果数据库中的user密码没有加密，则可以不加此NoOpPasswordEncoder方法。注意加密请使用security自带的加密方式。
+     * PasswordEncoder是对密码的加密处理，如果数据库中的user密码加密，则需奥使用匹配的加密方法，比如BCryptPasswordEncoder
+     */
+    //@Bean
+    //public PasswordEncoder passwordEncoder() {
+    //    return new BCryptPasswordEncoder();
+    //}
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 
     /**
@@ -54,11 +62,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder builder) throws Exception {
+    public void configureAuthentication(AuthenticationManagerBuilder builder) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(myUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        // 假如不设置false，当myUserDetailsService类的loadUserByUsername方法查询不到用户时不会抛出UsernameNotFoundException
+        // 假如不设置false，当myUserDetailsService类的loadUserByUsername方法查询不到用户时抛出的UsernameNotFoundException异常会被跳过，转换抛出BadCredentialsException异常
+        // 为了区别具体的错误，找不到该username的用户时应该抛出UsernameNotFoundException异常；密码不匹配则抛出BadCredentialsException异常
+        // 源码AbstractUserDetailsAuthenticationProvider类中的Authentication authenticate(Authentication authentication)方法的第68行
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         builder.authenticationProvider(daoAuthenticationProvider);
     }
