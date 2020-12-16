@@ -33,10 +33,18 @@ public class UserController {
 	@ApiOperation(value = "登出接口", httpMethod = "GET")
 	@GetMapping("/logout")
 	public Boolean logout(HttpServletRequest request){
+		System.out.println("==================================");
 		String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 		String token = StringUtils.substring(authHeader, JwtConstants.BEARER.length());
 		iUserService.logout(token);
 		return iUserService.logout(token);
+	}
+
+	@ApiOperation(value = "登出接口", httpMethod = "GET")
+	@GetMapping("/admin/hello")
+	public Boolean hello(HttpServletRequest request){
+		System.out.println("=====++++++++++++++++=========");
+		return true;
 	}
 
 }

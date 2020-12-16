@@ -2,6 +2,8 @@ package com.example.demo.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demo.constants.JwtConstants;
+import com.example.demo.exception.BusinessException;
+import com.example.demo.exception.ExceptionTypeEnums;
 import com.example.demo.utils.jwt.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -28,15 +30,17 @@ import java.util.stream.Stream;
  * @date 2020/12/07 14:10
  */
 @Slf4j
-@Configuration
+//@Configuration
 public class AccessFilter extends GenericFilterBean {
 
     @Value("${ignore.urls}")
     private String IGNORE_URLS = "/api/v1/user/login";
 
+    /**
+     * @RestControllerAdvice 全局异常类只捕获controller控制层的异常，而filter过滤器在请求到达controller之前执行，所以针对filter过滤器的异常，需要通过HandlerExceptionResolver处理
+     * */
     @Autowired
-    @Qualifier("handlerExceptionResolver")
-    private HandlerExceptionResolver resolver;
+    private HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     public void doFilter(final ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -49,13 +53,14 @@ public class AccessFilter extends GenericFilterBean {
             log.info("ignore url : " + request.getRequestURI());
             chain.doFilter(req, res);
         } else if (StringUtils.isBlank(token)) {
+            handlerExceptionResolver.resolveException(request, response, null, new BusinessException(ExceptionTypeEnums.NO_TOKEN_EXCEPTION));
             return;
         } else {
             try {
                 DecodedJWT claims = JwtTokenUtil.verifyToken(token);
             } catch (Exception e) {
                 e.printStackTrace();
-                resolver.resolveException(request, response, null, e);
+                handlerExceptionResolver.resolveException(request, response, null, e);
                 return;
             }
             //鉴权 todo

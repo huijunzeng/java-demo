@@ -30,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
+    @Autowired
+    private CustomAuthExceptionHandler customAuthExceptionHandler;
+
     /**
      * 认证对象管理
      * springboot2.1.x版本需要注入父类的authenticationManager  不然AuthorizationServerConfig授权服务器依赖AuthenticationManager报错
@@ -84,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
+     * 资源授权
      * 与http安全配置相关 可配置拦截什么URL、设置什么权限等安全控制
      * @param http
      * @throws Exception
@@ -93,12 +97,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String[] ignoreUrls = IGNORE_URLS.split(",");
         // 配置对某些访问路径放行(不需要携带token即可访问)
         http.csrf().disable()//禁用了 csrf 功能
-                .authorizeRequests()//限定签名成功的请求
-                .antMatchers(ignoreUrls).permitAll()//放行路径
-                .anyRequest().permitAll()//其他没有限定的请求，允许访问
-                .and().anonymous()//对于没有配置权限的其他请求允许匿名访问
+
+                //配置资源访问权限  依次顺序进行匹配
+                .authorizeRequests()
+                .antMatchers(ignoreUrls).permitAll()//放行请求路径
+                .antMatchers("/admin/**").hasRole("admin")//请求路径以/admin/开头的，必须需要拥有admin角色才能访问
+                .antMatchers("/user/**").hasAnyRole("admin", "user")//请求路径以/user/开头的，只需要拥有admin或user角色的其一就能访问
+                .anyRequest().permitAll()//剩下的其他请求路径都可以访问
+                //.anyRequest().authenticated()//剩下的其他请求路径，需要登录后才能访问
+                //.and().anonymous()//对于没有配置权限的其他请求允许匿名访问
+                // 允许配置错误处理(AccessDeniedHandler:用来解决认证过的用户访问无权限资源时的异常  AuthenticationEntryPoint:用来解决匿名用户访问无权限资源时的异常)
+                .and().exceptionHandling().accessDeniedHandler(customAuthExceptionHandler).authenticationEntryPoint(customAuthExceptionHandler)
+                
                 //.and().formLogin()//使用 spring security 默认登录页面
                 .and().httpBasic();//启用http 基础验证
-
     }
 }

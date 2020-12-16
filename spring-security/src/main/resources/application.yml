@@ -16,7 +16,7 @@ base:
 
 ##非自定义属性
 server:
-    port: 8082 # 启动端口
+    port: 8083 # 启动端口
 spring:
     application:
         name: spring-security

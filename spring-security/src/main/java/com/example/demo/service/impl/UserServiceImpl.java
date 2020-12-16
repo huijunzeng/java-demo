@@ -30,7 +30,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserLoginVO login(String username, String password) {
 
-        Authentication authentication = null;
+        Authentication authentication;
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             authentication = authenticationManager.authenticate(authenticationToken);

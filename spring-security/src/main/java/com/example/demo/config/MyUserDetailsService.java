@@ -54,7 +54,7 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     protected Set<GrantedAuthority> obtainGrantedAuthorities(UserEntity userEntity) {
         // todo 根据用户名去数据库查找用户对应的角色/资源
-        List<String> roles = Arrays.asList("超级管理员");
+        List<String> roles = Arrays.asList("admin");
         log.info("user:{},roles:{}", userEntity.getUsername(), roles);
         if (null == roles || roles.isEmpty()) {
             return new HashSet<>();

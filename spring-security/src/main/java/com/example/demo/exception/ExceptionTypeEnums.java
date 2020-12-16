@@ -41,6 +41,7 @@ public enum ExceptionTypeEnums implements ExceptionType {
 	TOKEN_HAS_EXPIRED(1204, "token已失效", 401),
 	JWT_DECODE_EXCEPTION(1205, "token解析异常，请检查token是否合法", 401),
 	SIGNATURE_VERIFICATION_EXCEPTION(1206, "token令牌签名异常", 401),
+	NO_TOKEN_EXCEPTION(1207, "token不能为空", 401),
 
 	/**算法相关错误*/
 	ARITHMETIC_ERROR(1301,"算法错误", 500),
