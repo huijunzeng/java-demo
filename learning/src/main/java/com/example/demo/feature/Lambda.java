@@ -5,6 +5,7 @@ import com.example.demo.tools.JSONUtil;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -17,7 +18,7 @@ public class Lambda {
 
     public static void main(String[] args) {
 
-        List<String> phoneList = Arrays.asList("honor", "vivo", "huawei", "xiaomi", "vivo");
+        List<String> phoneList = Arrays.asList("honor", "vivo", "huawei", "xiaomi", "vivo", null);
 
         Book book1 = new Book("科幻", "三体", "刘慈欣", 52.89);
         Book book2 = new Book("文学", "围城", "钱钟书", 62.89);
@@ -27,10 +28,14 @@ public class Lambda {
 
         // foreach遍历
         phoneList.forEach(e -> System.out.println(e));
+        Stream.of(phoneList).forEach(e -> System.out.println(e));
 
-        // count统计数量
+        // count统计数量  stream流式操作
         long phoneCount = phoneList.stream().count();
         System.out.println("phoneCount=======" + phoneCount);
+        // 注意.stream()与Stream.of()的区别   Stream.of()实际上是只有一个元素的流，而.stream()是多元素流
+        long streamCount = Stream.of(phoneList).count();
+        System.out.println("streamCount=======" + streamCount);
 
         // collect转化为新的对象
         // Collectors 是 Java 8 加入的操作类，位于 java.util.stream 包下。它会根据不同的策略将元素收集归纳起来，比如最简单常用的是将元素装入Map、Set、List 等可变容器中
@@ -41,13 +46,41 @@ public class Lambda {
         String joining = phoneList.stream().collect(Collectors.joining(","));
         System.out.println("joining=======" + joining);
 
+        // parallel并行操作，与parallelStream一样  因为类似于多线程操作，所以需要考虑线程安全
+        List<String> parallelList = new ArrayList<>();
+        List<String> parallelStreamList = new ArrayList<>();
+        phoneList.stream().parallel().forEach(parallelList::add);
+        // forEachOrdered保证按顺序遍历
+        phoneList.parallelStream().forEachOrdered(parallelStreamList::add);
+        System.out.println("parallelList=======" + parallelList);
+        System.out.println("parallelStreamList=======" + parallelStreamList);
+
         // filter过滤
         List<String> filterList = phoneList.stream().filter(e -> !"vivo".equals(e)).collect(Collectors.toList());
         System.out.println("filterList=======" + filterList.toString());
 
         // findFirst找到第一条匹配数据即返回
-        Book findFirstBook = bookList.stream().filter(e -> "历史".equals(e.getType())).findFirst().get();
-        System.out.println("findFirstBook=======" + JSONUtil.objectToJson(findFirstBook));
+        // 为null时会抛空指针异常，可使用orElse(null)解决
+        Book findFirstBook1 = bookList.stream().filter(e -> "悬疑".equals(e.getType())).findFirst().orElse(null);
+        Book findFirstBook2 = bookList.stream().filter(e -> "历史".equals(e.getType())).findFirst().get();
+        System.out.println("findFirstBook1=======" + JSONUtil.objectToJson(findFirstBook1));
+        System.out.println("findFirstBook2=======" + JSONUtil.objectToJson(findFirstBook2));
+
+        // findAny找到匹配数据即返回（串行操作与findFirst一样，即返回第一条数据；并行操作则返回最先操作完的结果）
+        Book findAnyBook = bookList.stream().filter(e -> "历史".equals(e.getType())).findAny().orElse(null);
+        System.out.println("findAnyBook=======" + JSONUtil.objectToJson(findAnyBook));
+
+        // anyMatch找到匹配的数据即返回true，否则返回false
+        boolean anyMatchPhone = phoneList.stream().anyMatch(e -> e.equals("huawei"));
+        System.out.println("anyMatchPhone=======" + anyMatchPhone);
+
+        // allMatch所有数据匹配返回true，否则返回false
+        boolean allMatchPhone = phoneList.stream().allMatch(e -> e != null);
+        System.out.println("allMatchPhone=======" + allMatchPhone);
+
+        // noneMatch所有数据不匹配返回true，否则返回false
+        boolean noneMatchPhone = phoneList.stream().noneMatch(e -> e == null);
+        System.out.println("noneMatchPhone=======" + noneMatchPhone);
 
         // limit限制输出数量
         // 限制输出两条数据
@@ -56,9 +89,9 @@ public class Lambda {
 
         // sorted排序
         // 按名称字母排序
-        List<String> sortedList1 = phoneList.stream().sorted((e1, e2) -> e1.compareToIgnoreCase(e2)).collect(Collectors.toList());
+        List<String> sortedList1 = phoneList.stream().filter(e -> e != null).sorted((e1, e2) -> e1.compareToIgnoreCase(e2)).collect(Collectors.toList());
         // 按名称字长度从短到长排序并反转
-        List<String> sortedList2 = phoneList.stream().sorted(Comparator.comparing(String::length).reversed()).collect(Collectors.toList());
+        List<String> sortedList2 = phoneList.stream().filter(e -> e != null).sorted(Comparator.comparing(String::length).reversed()).collect(Collectors.toList());
         System.out.println("sortedList1=======" + sortedList1.toString());
         System.out.println("sortedList2=======" + sortedList2.toString());
 
@@ -78,7 +111,7 @@ public class Lambda {
 
         // map对元素操作
         // 截取元素的第一个字母
-        List<String> maptList1 = phoneList.stream().map(e -> e.substring(0, 1)).collect(Collectors.toList());
+        List<String> maptList1 = phoneList.stream().filter(e -> e != null).map(e -> e.substring(0, 1)).collect(Collectors.toList());
         // 提取Book对象的name属性
         List<String> maptList2 = bookList.stream().map(e -> e.getName()).collect(Collectors.toList());
         List<String> maptList3 = bookList.stream().map(Book::getName).collect(Collectors.toList());
@@ -104,7 +137,7 @@ public class Lambda {
         // 对book集合根据type分组
         Map<String, List<Book>> groupingByCollect1 = bookList.stream().collect(Collectors.groupingBy(Book::getType));
         // 对book集合根据type分组并提取name字段
-        Map<String, List<String>> groupingByCollect2 = bookList.stream().collect(Collectors.groupingBy(Book::getType, Collectors.mapping(Book::getName, Collectors.toList())));
+        Map<String, List<String>> groupingByCollect2 = bookList.stream().parallel().collect(Collectors.groupingBy(Book::getType, Collectors.mapping(Book::getName, Collectors.toList())));
         System.out.println("groupingByCollect1=======" + JSONUtil.objectToJson(groupingByCollect1));
         System.out.println("groupingByCollect2=======" + JSONUtil.objectToJson(groupingByCollect2));
 
