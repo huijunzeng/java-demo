@@ -1,0 +1,14 @@
+##非自定义属性
+server:
+  port: 8085 # 启动端口
+spring:
+  application:
+    name: async-thread
+##线程池属性
+thread:
+  pool:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10
+    keep-alive-seconds: 60
+    thread-name-prefix: async-thread-

@@ -161,12 +161,12 @@ public class GlobalExceptionHandlerAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseVO constraintViolationException(ConstraintViolationException ex){
+    public ResponseVO constraintViolationException(ConstraintViolationException ex) {
         log.error("constraintViolationException:{}", ex.getMessage());
         StringBuilder msg = new StringBuilder();
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
         for (ConstraintViolation constraintViolation : constraintViolations
-             ) {
+        ) {
             msg.append(", ").append(constraintViolation.getMessage());
         }
         return ResponseVO.fail(ExceptionTypeEnums.PARAM_VALID_ERROR, msg == null ? ExceptionTypeEnums.PARAM_VALID_ERROR.getMsg() : msg.substring(2));

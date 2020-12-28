@@ -25,7 +25,9 @@ public class SwaggerProperties {
     @ApiModelProperty("版本号")
     private String version;
 
-    /**属性多层嵌套处理*/
+    /**
+     * 属性多层嵌套处理
+     */
     @ApiModelProperty("创建人信息  可用于定位该模块的负责人")
     private Contact contact = new Contact();
 

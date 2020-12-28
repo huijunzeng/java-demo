@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class}) // 排除自动读取配置数据库
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) // 排除自动读取配置数据库
 @MapperScan({"com.example.demo.mapper"}) // 扫描mapper文件
 public class DynamicDatasourceApplication {
 

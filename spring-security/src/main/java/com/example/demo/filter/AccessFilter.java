@@ -38,7 +38,7 @@ public class AccessFilter extends GenericFilterBean {
 
     /**
      * @RestControllerAdvice 全局异常类只捕获controller控制层的异常，而filter过滤器在请求到达controller之前执行，所以针对filter过滤器的异常，需要通过HandlerExceptionResolver处理
-     * */
+     */
     @Autowired
     private HandlerExceptionResolver handlerExceptionResolver;
 
@@ -64,7 +64,7 @@ public class AccessFilter extends GenericFilterBean {
                 return;
             }
             //鉴权 todo
-           chain.doFilter(req, res);
+            chain.doFilter(req, res);
         }
     }
 }

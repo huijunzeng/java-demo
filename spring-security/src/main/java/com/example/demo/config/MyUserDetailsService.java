@@ -49,6 +49,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     /**
      * 获得用户的所有角色的权限集合.
+     *
      * @param userEntity
      * @return
      */

@@ -27,19 +27,21 @@ import java.util.Map;
 @Slf4j
 public class DynamicDataSourceConfig {
 
-    /**主库配置*/
+    /**
+     * 主库配置
+     */
     @Bean("masterDataSource")
     @ConfigurationProperties("spring.datasource.master")
-    public DataSource masterDataSource()
-    {
+    public DataSource masterDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    /**从库配置*/
+    /**
+     * 从库配置
+     */
     @Bean("slaveDataSource")
     @ConfigurationProperties("spring.datasource.slave")
-    public DataSource slaveDataSource()
-    {
+    public DataSource slaveDataSource() {
         return DataSourceBuilder.create().build();
     }
 
@@ -63,7 +65,9 @@ public class DynamicDataSourceConfig {
     }
 
     /**以下可不配  DynamicDataSource需要一致*/
-    /**配置MybatisSqlSessionFactory*/
+    /**
+     * 配置MybatisSqlSessionFactory
+     */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
         // mybatis plus报ibatis.binding.BindingException: Invalid bound statement (not found)
@@ -76,9 +80,11 @@ public class DynamicDataSourceConfig {
         return factoryBean.getObject();
     }
 
-    /**配置事务管理器*/
+    /**
+     * 配置事务管理器
+     */
     @Bean
-    public PlatformTransactionManager transactionManager(DynamicDataSource dynamicDataSource){
+    public PlatformTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
         return new DataSourceTransactionManager(dynamicDataSource);
     }
 }

@@ -9,7 +9,9 @@ public interface IRemoteInvoke {
 
     String load();
 
-    /**default修饰方法只能在接口中使用，在接口种被default标记的方法为普通方法，可以直接写方法体*/
+    /**
+     * default修饰方法只能在接口中使用，在接口种被default标记的方法为普通方法，可以直接写方法体
+     */
     default void delay() {
         try {
             // 睡眠三秒

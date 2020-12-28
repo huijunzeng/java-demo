@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author zjh
- * @Description  token 工具类
+ * @Description token 工具类
  * @date 2020/12/07 13:38
  */
 
@@ -40,8 +40,11 @@ public class JwtTokenUtil {
     private static final long EXPIRE_TIME = 864000000L;
     private static final String ISSUER = "cof";
 
-    /**静态类 构造注入*/
+    /**
+     * 静态类 构造注入
+     */
     private static RedisUtil redisUtil;
+
     @Autowired
     public JwtTokenUtil(RedisUtil redisUtil) {
         this.redisUtil = redisUtil;
@@ -104,7 +107,7 @@ public class JwtTokenUtil {
     }
 
     public static void main(String[] args) {
-        String authHeader  = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqd3QiLCJuYmYiOjE2MDczOTMxMjksInJvbGVzIjpbImEwMDEiXSwiaXNzIjoiY29mIiwiZXhwIjoxNjA3Mzk3NDQ5LCJpYXQiOjE2MDczOTMxMjksInVzZXJuYW1lIjoidGVzdCJ9.YDzxuGePBB0sAUeBaYK2V4naP339FyT4yNi7Ks0xA5U";
+        String authHeader = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqd3QiLCJuYmYiOjE2MDczOTMxMjksInJvbGVzIjpbImEwMDEiXSwiaXNzIjoiY29mIiwiZXhwIjoxNjA3Mzk3NDQ5LCJpYXQiOjE2MDczOTMxMjksInVzZXJuYW1lIjoidGVzdCJ9.YDzxuGePBB0sAUeBaYK2V4naP339FyT4yNi7Ks0xA5U";
         final String BEARER = "Bearer ";
         String token = StringUtils.substring(authHeader, BEARER.length());
         DecodedJWT decodedJWT = JwtTokenUtil.verifyToken(token);

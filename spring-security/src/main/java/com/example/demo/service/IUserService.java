@@ -8,7 +8,7 @@ import com.example.demo.vo.UserLoginVO;
  * @date 2020/12/09 17:03
  */
 public interface IUserService {
-    
+
     UserLoginVO login(String username, String password);
 
     Boolean logout(String token);

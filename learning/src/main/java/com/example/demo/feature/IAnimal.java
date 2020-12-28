@@ -7,7 +7,9 @@ package com.example.demo.feature;
  */
 public interface IAnimal {
 
-    /**抽象方法  必须要在实现该接口的类中实现*/
+    /**
+     * 抽象方法  必须要在实现该接口的类中实现
+     */
     String getName(String name);
 
     /**
@@ -28,6 +30,7 @@ public interface IAnimal {
      * 不能被子接口继承
      * 不能被实现该接口的类继承
      * 调用形式：接口名.静态方法名()
+     *
      * @return
      */
     static String getType() {

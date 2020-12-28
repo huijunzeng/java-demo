@@ -22,7 +22,8 @@ public class ZipUtil {
 
     /**
      * 压缩
-     * @param paths 待压缩文件路径
+     *
+     * @param paths    待压缩文件路径
      * @param fileName 压缩包名称
      */
     public static void zip(String[] paths, String fileName) {
@@ -98,7 +99,7 @@ public class ZipUtil {
                 } else {
                     String name = zn.getName();
                     File file = new File(path);
-                    if(!file.exists()){
+                    if (!file.exists()) {
                         file.mkdirs();
                     }
                 }

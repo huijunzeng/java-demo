@@ -1,6 +1,6 @@
 ##非自定义属性
 server:
-    port: 8070 # 启动端口
+  port: 8070 # 启动端口
 spring:
-    application:
-        name: server-info
+  application:
+    name: server-info

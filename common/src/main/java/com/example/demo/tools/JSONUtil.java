@@ -18,7 +18,9 @@ import java.util.Map;
 @Slf4j
 public class JSONUtil {
 
-    /**定义jackson对象*/
+    /**
+     * 定义jackson对象
+     */
     private static ObjectMapper mapper;
 
     static {
@@ -29,6 +31,7 @@ public class JSONUtil {
 
     /**
      * 将对象转换成json字符串。
+     *
      * @param data
      * @return
      */
@@ -43,7 +46,8 @@ public class JSONUtil {
 
     /**
      * 将json结果集转化为对象
-     * @param jsonStr json数据
+     *
+     * @param jsonStr  json数据
      * @param beanType 对象中的object类型
      * @return
      */
@@ -58,6 +62,7 @@ public class JSONUtil {
 
     /**
      * 将json数据转换成pojo对象list
+     *
      * @param jsonStr
      * @param beanType
      * @return
@@ -74,6 +79,7 @@ public class JSONUtil {
 
     /**
      * 将json数据转换成map
+     *
      * @param jsonStr
      * @return
      */
@@ -88,6 +94,7 @@ public class JSONUtil {
 
     /**
      * 将json数据转换成节点树
+     *
      * @param jsonStr
      * @return
      */
@@ -102,7 +109,8 @@ public class JSONUtil {
 
     /**
      * 将json数据获取字段值
-     * @param jsonStr  json数据
+     *
+     * @param jsonStr   json数据
      * @param fieldName json数据中的字段名称
      * @return
      */

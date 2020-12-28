@@ -15,6 +15,7 @@
         <module>learning</module>
         <module>server-minitor</module>
         <module>spring-security</module>
+        <module>async-thread</module>
     </modules>
 
     <parent>

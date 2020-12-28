@@ -20,16 +20,17 @@ import java.nio.charset.StandardCharsets;
  * 自定义未授权 token无效 权限不足返回信息处理类
  * 默认返回如同以下的信息：
  * {
- *     "error": "unauthorized",
- *     "error_description": "Full authentication is required to access this resource"
+ * "error": "unauthorized",
+ * "error_description": "Full authentication is required to access this resource"
  * }
  * 需要改成统一异常类的格式：
  * {
- *     "code": 500,
- *     "msg": "内部服务错误"
+ * "code": 500,
+ * "msg": "内部服务错误"
  * }
  * AuthenticationEntryPoint 用来解决匿名用户访问无权限资源时的异常
  * AccessDeniedHandler 用来解决认证过的用户访问无权限资源时的异常
+ *
  * @Author: ZJH
  * @Date: 2020/11/19 17:39
  */
@@ -40,6 +41,7 @@ public class CustomAuthExceptionHandler implements AuthenticationEntryPoint, Acc
 
     /**
      * AuthenticationEntryPoint
+     *
      * @param request
      * @param response
      * @param authException
@@ -53,7 +55,7 @@ public class CustomAuthExceptionHandler implements AuthenticationEntryPoint, Acc
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         // CORS "pre-flight" request
         response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Cache-Control","no-cache");
+        response.addHeader("Cache-Control", "no-cache");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");
@@ -62,14 +64,15 @@ public class CustomAuthExceptionHandler implements AuthenticationEntryPoint, Acc
             // Token无效
             response.getWriter().write(JSONUtil.objectToJson(ResponseVO.fail(ExceptionTypeEnums.INVALID_TOKEN)));
         } else {*/
-            log.error("Unauthorized : Unauthorized");
-            // 资源未授权
-            response.getWriter().write(JSONUtil.objectToJson(ResponseVO.fail(ExceptionTypeEnums.UN_AUTHORIZED)));
+        log.error("Unauthorized : Unauthorized");
+        // 资源未授权
+        response.getWriter().write(JSONUtil.objectToJson(ResponseVO.fail(ExceptionTypeEnums.UN_AUTHORIZED)));
         //}
     }
 
     /**
      * AccessDeniedHandler
+     *
      * @param request
      * @param response
      * @param accessDeniedException
@@ -81,7 +84,7 @@ public class CustomAuthExceptionHandler implements AuthenticationEntryPoint, Acc
         response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Cache-Control","no-cache");
+        response.addHeader("Cache-Control", "no-cache");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.addHeader("Access-Control-Max-Age", "1800");

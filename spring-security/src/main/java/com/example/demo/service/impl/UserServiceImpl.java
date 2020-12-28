@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
         } catch (BadCredentialsException e) {
             throw new BusinessException(ExceptionTypeEnums.PASSWORD_WRONG);
         }
-        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = JwtTokenUtil.createToken(userDetails);
         UserLoginVO userLoginVO = new UserLoginVO();
         userLoginVO.setToken(token);

@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 认证对象管理
      * springboot2.1.x版本需要注入父类的authenticationManager  不然AuthorizationServerConfig授权服务器依赖AuthenticationManager报错
      * Field authenticationManager in com.xxx.xxx required a bean of type 'org.springframework.security.authentication.AuthenticationManager' that could not be found.
+     *
      * @return
      * @throws Exception
      */
@@ -61,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 认证对象管理构造器  用于管理用户
+     *
      * @param builder
      * @throws Exception
      */
@@ -89,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 资源授权
      * 与http安全配置相关 可配置拦截什么URL、设置什么权限等安全控制
+     *
      * @param http
      * @throws Exception
      */
@@ -108,7 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.and().anonymous()//对于没有配置权限的其他请求允许匿名访问
                 // 允许配置错误处理(AccessDeniedHandler:用来解决认证过的用户访问无权限资源时的异常  AuthenticationEntryPoint:用来解决匿名用户访问无权限资源时的异常)
                 .and().exceptionHandling().accessDeniedHandler(customAuthExceptionHandler).authenticationEntryPoint(customAuthExceptionHandler)
-                
+
                 //.and().formLogin()//使用 spring security 默认登录页面
                 .and().httpBasic();//启用http 基础验证
     }

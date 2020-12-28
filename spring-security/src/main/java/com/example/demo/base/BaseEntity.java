@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 基础类
+ *
  * @Author: ZJH
  * @Date: 2020/1/14 10:21
  */
@@ -43,6 +44,7 @@ public class BaseEntity implements Serializable {
 
     /**
      * 是否已删除 1已删除 0未删除
+     *
      * @TableLogic 逻辑删除，调用delete方法实际执行update
      */
     private Integer deleted;

@@ -26,6 +26,7 @@ public interface ICat extends IAnimal {
      * 不能被子接口继承
      * 不能被实现该接口的类继承
      * 调用形式：接口名.静态方法名()
+     *
      * @return
      */
     static String getType() {

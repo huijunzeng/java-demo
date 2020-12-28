@@ -15,6 +15,7 @@ import java.util.Objects;
 
 /**
  * 利用Aop特性选择数据源
+ *
  * @author zjh
  */
 
@@ -27,12 +28,12 @@ public class DataSourceAspect {
 
     /**写操作切点（匹配对数据的增删改的注解以及所有方法）*/
     @Pointcut("@annotation(com.example.demo.annotation.DataSource)" +
-              "|| execution(* com.example.demo.service..*.save*(..))" +
-              "|| execution(* com.example.demo.service..*.insert*(..))" +
-              "|| execution(* com.example.demo.service..*.add*(..))" +
-              "|| execution(* com.example.demo.service..*.update*(..))" +
-              "|| execution(* com.example.demo.service..*.delete*(..))" +
-              "|| execution(* com.example.demo.service..*.remove*(..))"
+            "|| execution(* com.example.demo.service..*.save*(..))" +
+            "|| execution(* com.example.demo.service..*.insert*(..))" +
+            "|| execution(* com.example.demo.service..*.add*(..))" +
+            "|| execution(* com.example.demo.service..*.update*(..))" +
+            "|| execution(* com.example.demo.service..*.delete*(..))" +
+            "|| execution(* com.example.demo.service..*.remove*(..))"
     )
     public void writePointCut() {
     }
@@ -66,7 +67,7 @@ public class DataSourceAspect {
 
     /**执行完必须要清除线程变量*/
     @After("readPointCut()")
-    public void after(JoinPoint joinPoint){
+    public void after(JoinPoint joinPoint) {
         DynamicDataSourceContextHolder.clear();
     }
 

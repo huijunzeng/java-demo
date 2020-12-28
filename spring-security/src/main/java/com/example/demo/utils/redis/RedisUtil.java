@@ -21,10 +21,11 @@ public class RedisUtil {
 
     @Autowired
     private RedisTemplate redisTemplate;
-	
-	/**
+
+    /**
      * 指定缓存失效时间
-     * @param key 键
+     *
+     * @param key  键
      * @param time 时间（秒）
      * @return true / false
      */
@@ -42,6 +43,7 @@ public class RedisUtil {
 
     /**
      * 根据 key 获取过期时间
+     *
      * @param key 键
      * @return
      */
@@ -51,6 +53,7 @@ public class RedisUtil {
 
     /**
      * 判断 key 是否存在
+     *
      * @param key 键
      * @return true / false
      */
@@ -65,12 +68,13 @@ public class RedisUtil {
 
     /**
      * 删除缓存
-     * @SuppressWarnings("unchecked") 忽略类型转换警告
+     *
      * @param key 键（一个或者多个）
+     * @SuppressWarnings("unchecked") 忽略类型转换警告
      */
     public boolean del(String... key) {
-    	try {
-    		if (key != null && key.length > 0) {
+        try {
+            if (key != null && key.length > 0) {
                 if (key.length == 1) {
                     redisTemplate.delete(key[0]);
                 } else {
@@ -89,6 +93,7 @@ public class RedisUtil {
 
     /**
      * 普通缓存获取
+     *
      * @param key 键
      * @return 值
      */
@@ -98,7 +103,8 @@ public class RedisUtil {
 
     /**
      * 普通缓存放入
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
      * @return true / false
      */
@@ -114,9 +120,10 @@ public class RedisUtil {
 
     /**
      * 普通缓存放入并设置时间
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
-     * @param time 时间（秒），如果 time < 0 则设置无限时间
+     * @param time  时间（秒），如果 time < 0 则设置无限时间
      * @return true / false
      */
     public boolean set(String key, Object value, long time) {
@@ -135,7 +142,8 @@ public class RedisUtil {
 
     /**
      * 递增
-     * @param key 键
+     *
+     * @param key   键
      * @param delta 递增大小
      * @return
      */
@@ -148,7 +156,8 @@ public class RedisUtil {
 
     /**
      * 递减
-     * @param key 键
+     *
+     * @param key   键
      * @param delta 递减大小
      * @return
      */
@@ -163,7 +172,8 @@ public class RedisUtil {
 
     /**
      * HashGet
-     * @param key 键（not null）
+     *
+     * @param key  键（not null）
      * @param item 项（not null）
      * @return 值
      */
@@ -173,6 +183,7 @@ public class RedisUtil {
 
     /**
      * 获取 key 对应的 map
+     *
      * @param key 键（no null）
      * @return 对应的多个键值
      */
@@ -182,6 +193,7 @@ public class RedisUtil {
 
     /**
      * HashSet
+     *
      * @param key 键
      * @param map 值
      * @return true / false
@@ -198,8 +210,9 @@ public class RedisUtil {
 
     /**
      * HashSet 并设置时间
-     * @param key 键
-     * @param map 值
+     *
+     * @param key  键
+     * @param map  值
      * @param time 时间（秒）
      * @return true / false
      */
@@ -218,8 +231,9 @@ public class RedisUtil {
 
     /**
      * 向一张 Hash表 中放入数据，如不存在则创建
-     * @param key 键
-     * @param item 项
+     *
+     * @param key   键
+     * @param item  项
      * @param value 值
      * @return true / false
      */
@@ -235,10 +249,11 @@ public class RedisUtil {
 
     /**
      * 向一张 Hash表 中放入数据，并设置时间，如不存在则创建
-     * @param key 键
-     * @param item 项
+     *
+     * @param key   键
+     * @param item  项
      * @param value 值
-     * @param time 时间（秒，如果原来的 Hash表 设置了时间，这里会覆盖）
+     * @param time  时间（秒，如果原来的 Hash表 设置了时间，这里会覆盖）
      * @return true / false
      */
     public boolean hset(String key, String item, Object value, long time) {
@@ -256,7 +271,8 @@ public class RedisUtil {
 
     /**
      * 删除 Hash表 中的值
-     * @param key 键（not null）
+     *
+     * @param key  键（not null）
      * @param item 项（可以多个，not null）
      */
     public void hdel(String key, Object... item) {
@@ -265,7 +281,8 @@ public class RedisUtil {
 
     /**
      * 判断 Hash表 中是否有该键的值
-     * @param key 键（not null）
+     *
+     * @param key  键（not null）
      * @param item 值（not null）
      * @return true / false
      */
@@ -275,9 +292,10 @@ public class RedisUtil {
 
     /**
      * Hash递增，如果不存在则创建一个，并把新增的值返回
-     * @param key 键
+     *
+     * @param key  键
      * @param item 项
-     * @param by 递增大小 > 0
+     * @param by   递增大小 > 0
      * @return
      */
     public Double hincr(String key, String item, Double by) {
@@ -286,9 +304,10 @@ public class RedisUtil {
 
     /**
      * Hash递减
-     * @param key 键
+     *
+     * @param key  键
      * @param item 项
-     * @param by 递减大小
+     * @param by   递减大小
      * @return
      */
     public Double hdecr(String key, String item, Double by) {
@@ -299,6 +318,7 @@ public class RedisUtil {
 
     /**
      * 根据 key 获取 set 中的所有值
+     *
      * @param key 键
      * @return 值
      */
@@ -313,7 +333,8 @@ public class RedisUtil {
 
     /**
      * 从键为 key 的 set 中，根据 value 查询是否存在
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
      * @return true / false
      */
@@ -328,7 +349,8 @@ public class RedisUtil {
 
     /**
      * 将数据放入 set缓存
-     * @param key 键值
+     *
+     * @param key    键值
      * @param values 值（可以多个）
      * @return 成功个数
      */
@@ -343,8 +365,9 @@ public class RedisUtil {
 
     /**
      * 将数据放入 set缓存，并设置时间
-     * @param key 键
-     * @param time 时间
+     *
+     * @param key    键
+     * @param time   时间
      * @param values 值（可以多个）
      * @return 成功放入个数
      */
@@ -363,6 +386,7 @@ public class RedisUtil {
 
     /**
      * 获取 set缓存的长度
+     *
      * @param key 键
      * @return 长度
      */
@@ -377,7 +401,8 @@ public class RedisUtil {
 
     /**
      * 移除 set缓存中，值为 value 的
-     * @param key 键
+     *
+     * @param key    键
      * @param values 值
      * @return 成功移除个数
      */
@@ -394,9 +419,10 @@ public class RedisUtil {
 
     /**
      * 获取 list缓存的内容
-     * @param key 键
+     *
+     * @param key   键
      * @param start 开始
-     * @param end 结束（0 到 -1 代表所有值）
+     * @param end   结束（0 到 -1 代表所有值）
      * @return
      */
     public List<Object> lGet(String key, long start, long end) {
@@ -410,6 +436,7 @@ public class RedisUtil {
 
     /**
      * 获取 list缓存的长度
+     *
      * @param key 键
      * @return 长度
      */
@@ -424,7 +451,8 @@ public class RedisUtil {
 
     /**
      * 根据索引 index 获取键为 key 的 list 中的元素
-     * @param key 键
+     *
+     * @param key   键
      * @param index 索引
      *              当 index >= 0 时 {0:表头, 1:第二个元素}
      *              当 index < 0 时 {-1:表尾, -2:倒数第二个元素}
@@ -441,7 +469,8 @@ public class RedisUtil {
 
     /**
      * 将值 value 插入键为 key 的 list 中，如果 list 不存在则创建空 list
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
      * @return true / false
      */
@@ -457,9 +486,10 @@ public class RedisUtil {
 
     /**
      * 将值 value 插入键为 key 的 list 中，并设置时间
-     * @param key 键
+     *
+     * @param key   键
      * @param value 值
-     * @param time 时间
+     * @param time  时间
      * @return true / false
      */
     public boolean lSet(String key, Object value, long time) {
@@ -477,7 +507,8 @@ public class RedisUtil {
 
     /**
      * 将 values 插入键为 key 的 list 中
-     * @param key 键
+     *
+     * @param key    键
      * @param values 值
      * @return true / false
      */
@@ -493,9 +524,10 @@ public class RedisUtil {
 
     /**
      * 将 values 插入键为 key 的 list 中，并设置时间
-     * @param key 键
+     *
+     * @param key    键
      * @param values 值
-     * @param time 时间
+     * @param time   时间
      * @return true / false
      */
     public boolean lSetList(String key, List<Object> values, long time) {
@@ -513,7 +545,8 @@ public class RedisUtil {
 
     /**
      * 根据索引 index 修改键为 key 的值
-     * @param key 键
+     *
+     * @param key   键
      * @param index 索引
      * @param value 值
      * @return true / false
@@ -530,7 +563,8 @@ public class RedisUtil {
 
     /**
      * 在键为 key 的 list 中删除值为 value 的元素
-     * @param key 键
+     *
+     * @param key   键
      * @param count 如果 count == 0 则删除 list 中所有值为 value 的元素
      *              如果 count > 0 则删除 list 中最左边那个值为 value 的元素
      *              如果 count < 0 则删除 list 中最右边那个值为 value 的元素
@@ -548,6 +582,7 @@ public class RedisUtil {
 
     /**
      * 在键为 key 的 list 中删除左边第一个元素
+     *
      * @param key 键
      */
     public void lLeftPop(String key) {
@@ -560,6 +595,7 @@ public class RedisUtil {
 
     /**
      * 在键为 key 的 list 中删除右边第一个元素
+     *
      * @param key 键
      */
     public void lRightPop(String key) {
@@ -572,6 +608,7 @@ public class RedisUtil {
 
     /**
      * 删除list首尾，只保留 [start, end] 之间的值
+     *
      * @param key
      * @param start
      * @param end
@@ -584,15 +621,16 @@ public class RedisUtil {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * 模糊查询
+     *
      * @param key 键
      * @return true / false
      */
     public List<Object> keys(String key) {
         try {
-        	Set<String> set = redisTemplate.keys(key);
+            Set<String> set = redisTemplate.keys(key);
             return new ArrayList<>(set);
         } catch (Exception e) {
             e.printStackTrace();

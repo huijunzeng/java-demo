@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 /**
  * lambda操作
+ *
  * @author zjh
  * @Description
  * @date 2020/11/24 11:08
@@ -126,7 +127,7 @@ public class Lambda {
 
         // collectingAndThen将数据归纳操作后再进行后续相应处理 Collectors
         // 提取书名name，并以逗号拼接成一个字符串；最后将该字符串反转
-        Function<String,String> reverseStr = e -> new StringBuilder(e).reverse().toString();
+        Function<String, String> reverseStr = e -> new StringBuilder(e).reverse().toString();
         String reverseBookName = bookList.stream().collect(Collectors.collectingAndThen(Collectors.mapping(Book::getName, Collectors.joining(";")), reverseStr));
         // 提取书名name；最后生成一个新的list
         List<String> collectingAndThenList = bookList.stream().collect(Collectors.collectingAndThen(Collectors.mapping(Book::getName, Collectors.toList()), Collections::unmodifiableList));

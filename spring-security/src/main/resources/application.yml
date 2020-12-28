@@ -2,47 +2,47 @@
 
 ##自定义属性
 base:
-    config:
-        # swagger属性
-        swagger:
-            enabled: true
-            title: Spring Security + JWT整合案例
-            description: Spring Security + JWT案例
-            version: 1.0
-            contact:
-                name: ZJH
-                email: 18826233829@163.com
-                url:
+  config:
+    # swagger属性
+    swagger:
+      enabled: true
+      title: Spring Security + JWT整合案例
+      description: Spring Security + JWT案例
+      version: 1.0
+      contact:
+        name: ZJH
+        email: 18826233829@163.com
+        url:
 
 ##非自定义属性
 server:
-    port: 8083 # 启动端口
+  port: 8083 # 启动端口
 spring:
-    application:
-        name: spring-security
-    redis:
-        # Redis
-        host: 192.168.10.123
-        #端口号
-        port: 6379
-        datebase: 1
-        password: benson
-        #超时时间
-        timeout: 10000
+  application:
+    name: spring-security
+  redis:
+    # Redis
+    host: 192.168.10.123
+    #端口号
+    port: 6379
+    datebase: 1
+    password: benson
+    #超时时间
+    timeout: 10000
 
-    #出现错误时, 直接抛出异常
-    mvc:
-        throw-exception-if-no-handler-found: true
-    web:
-        resources:
-            add-mappings: false
+  #出现错误时, 直接抛出异常
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
 ##jwt配置
 jwt:
-    #密钥
-    secretKey: ${JWT_SECRETKEY:cof123456}
-    #过期时间毫秒
-    expireTime: ${JWT_EXPIRETIME:864000000}
+  #密钥
+  secretKey: ${JWT_SECRETKEY:cof123456}
+  #过期时间毫秒
+  expireTime: ${JWT_EXPIRETIME:864000000}
 
 ##鉴权忽略路径
 ignore:
-    urls: ${IGNORE_URLS:/api/v1/user/login,/api/v1/user/userInfo,/swagger-ui/,/swagger/,/webjars/,/swagger-resources,/static/,/doc.html,/v3/api-docs,/favor.ioc}
+  urls: ${IGNORE_URLS:/api/v1/user/login,/api/v1/user/userInfo,/swagger-ui/,/swagger/,/webjars/,/swagger-resources,/static/,/doc.html,/v3/api-docs,/favor.ioc}

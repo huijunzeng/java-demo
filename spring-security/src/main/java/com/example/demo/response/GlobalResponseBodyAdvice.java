@@ -26,7 +26,9 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     // 不处理直接返回的资源
     private String IGNORE_URLS = "/swagger-ui/,/swagger/,/swagger-resources,/static/,/doc.html,/v3/api-docs,/favor.ioc";
 
-    /**用于判断是否需要做处理  返回false表示不需要做处理*/
+    /**
+     * 用于判断是否需要做处理  返回false表示不需要做处理
+     */
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {
         Method method = methodParameter.getMethod();
@@ -47,7 +49,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         if (Stream.of(IGNORE_URLS.split(",")).anyMatch(ignoreUrl -> path.startsWith(StringUtils.trim(ignoreUrl)))) {
             return o;
         }
-        if(!(o instanceof ResponseVO)) {
+        if (!(o instanceof ResponseVO)) {
             ResponseVO responseVO = new ResponseVO(ExceptionTypeEnums.SUCCESS, o);
             return responseVO;
         }
