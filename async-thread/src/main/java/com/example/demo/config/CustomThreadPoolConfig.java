@@ -34,7 +34,7 @@ public class CustomThreadPoolConfig {
     @Bean("executor")
     public ThreadPoolTaskExecutor threadPoolTaskExecutor(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(corePoolSize);// 线程池维护线程的最小数量
+        executor.setCorePoolSize(corePoolSize);// 线程池维护线程的最小数量  最佳线程个数，cpu处理器核数*2
         executor.setMaxPoolSize(maxPoolSize);// 线程池维护线程的最大数量
         executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列
         executor.setKeepAliveSeconds(keepAliveSeconds);// 空闲线程的存活时间

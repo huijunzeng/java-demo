@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @date 2020/12/28 16:05
  */
 
-//@Component
+@Component
 public class CustomAsyncTask {
 
     @Autowired

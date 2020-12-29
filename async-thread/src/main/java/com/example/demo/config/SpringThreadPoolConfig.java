@@ -18,7 +18,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class SpringThreadPoolConfig implements AsyncConfigurer {
 
-
     @Value("${thread.pool.core-pool-size}")
     private int corePoolSize;
 
@@ -37,7 +36,7 @@ public class SpringThreadPoolConfig implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(corePoolSize);// 线程池维护线程的最小数量
+        executor.setCorePoolSize(corePoolSize);// 线程池核心线程数，即维护线程的最小数量
         executor.setMaxPoolSize(maxPoolSize);// 线程池维护线程的最大数量
         executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列
         executor.setKeepAliveSeconds(keepAliveSeconds);// 空闲线程的存活时间
