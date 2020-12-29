@@ -7,8 +7,8 @@ spring:
 ##线程池属性
 thread:
   pool:
-    core-pool-size: 10
-    max-pool-size: 50
-    queue-capacity: 10
+    core-pool-size: 2
+    max-pool-size: 5
+    queue-capacity: 12
     keep-alive-seconds: 60
     thread-name-prefix: async-thread-

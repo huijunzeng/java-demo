@@ -31,16 +31,38 @@ public class CustomThreadPoolConfig {
     @Value("${thread.pool.thread-name-prefix}")
     private String threadNamePrefix;
 
-    @Bean("executor")
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor(){
+    // 一般直接用spring的即可
+    @Bean("springThreadPool")
+    public ThreadPoolTaskExecutor springThreadPool(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);// 线程池维护线程的最小数量  最佳线程个数，cpu处理器核数*2
         executor.setMaxPoolSize(maxPoolSize);// 线程池维护线程的最大数量
-        executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列
+        executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列容量大小，并且线程池所用的任务队列类型取决于容量大小值  queueCapacity > 0 ? new LinkedBlockingQueue(queueCapacity) : new SynchronousQueue()
         executor.setKeepAliveSeconds(keepAliveSeconds);// 空闲线程的存活时间
         executor.setThreadNamePrefix(threadNamePrefix + "custom-");// 线程名称前缀
-        // 线程池对拒绝任务(无线程可用)的处理策略
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // 线程池对拒绝任务(无线程可用)的处理策略  抛异常
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         return executor;
+    }
+
+    // 不用spring的，可以使用以下的封装
+    @Bean("customThreadPool")
+    public ExecutorService customThreadPool(){
+        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(1);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveSeconds, TimeUnit.SECONDS, queue) {
+            @Override
+            protected void beforeExecute(Thread t, Runnable r) {
+                t.setName("websocket-push-pool-");
+            }
+        };
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        return executor;
+    }
+
+    // 不推荐使用Executors
+    @Bean("cachedThreadPool")
+    public ExecutorService cachedThreadPool(){
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        return executorService;
     }
 }

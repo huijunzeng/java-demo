@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author zjh
  * @Description
@@ -21,7 +23,7 @@ public class CustomThreadController {
     private CustomAsyncTask customAsyncTask;
 
     @Autowired
-    @Qualifier("executor")
+    @Qualifier("springThreadPool")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     /**
@@ -49,10 +51,41 @@ public class CustomThreadController {
      * 结合@Async简化使用
      * @throws InterruptedException
      */
-    @GetMapping("/test")
+    @GetMapping("/springThreadPool")
     public void test() throws InterruptedException {
+        long start = System.currentTimeMillis();
         for (int i = 0; i < 100; i++) {
-            customAsyncTask.test(i);
+            customAsyncTask.springThreadPool(i);
         }
+        long end = System.currentTimeMillis();
+        System.out.println("total time=======" + (end - start));
+    }
+
+    /**
+     * 结合@Async简化使用
+     * @throws InterruptedException
+     */
+    @GetMapping("/customThreadPool")
+    public void customThreadPool() throws InterruptedException {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            customAsyncTask.customThreadPool(i);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("total time=======" + (end - start));
+    }
+
+    /**
+     * 结合@Async简化使用
+     * @throws InterruptedException
+     */
+    @GetMapping("/cachedThreadPool")
+    public void cachedThreadPool() throws InterruptedException {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            customAsyncTask.cachedThreadPool(i);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("total time=======" + (end - start));
     }
 }

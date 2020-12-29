@@ -38,11 +38,11 @@ public class SpringThreadPoolConfig implements AsyncConfigurer {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);// 线程池核心线程数，即维护线程的最小数量
         executor.setMaxPoolSize(maxPoolSize);// 线程池维护线程的最大数量
-        executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列
+        executor.setQueueCapacity(queueCapacity);//  线程池所使用的缓冲队列容量大小，并且线程池所用的任务队列类型取决于容量大小值  queueCapacity > 0 ? new LinkedBlockingQueue(queueCapacity) : new SynchronousQueue()
         executor.setKeepAliveSeconds(keepAliveSeconds);// 空闲线程的存活时间
         executor.setThreadNamePrefix(threadNamePrefix + "spring-");// 线程名称前缀
         // 线程池对拒绝任务(无线程可用)的处理策略
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         // 使用spring封装的线程池，必须初始化，不然报错
         executor.initialize();
         return executor;
