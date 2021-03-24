@@ -2,6 +2,7 @@ package com.example.demo.feature;
 
 import com.example.demo.tools.JSONUtil;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -148,6 +149,13 @@ public class Lambda {
         Map<String, Book> toMapCollect2 = bookList.stream().collect(Collectors.toMap(Book::getName, book -> book, (key1, key2) -> key1));
         System.out.println("toMapCollect1=======" + JSONUtil.objectToJson(toMapCollect1));
         System.out.println("toMapCollect2=======" + JSONUtil.objectToJson(toMapCollect2));
+
+        // reduce计算总价格
+        Double totalPrice1 = bookList.stream().map(Book::getPrice).reduce(Double::sum).get();
+        Double totalPrice2 = bookList.stream().map(Book::getPrice).reduce((a, b) -> a+b).get();
+        System.out.println("totalPrice1=======" + totalPrice1);
+        System.out.println("totalPrice2=======" + totalPrice2);
+
     }
 
     public static class Book {
